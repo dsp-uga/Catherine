@@ -6,18 +6,13 @@ from operator import add
 
 from pyspark import SparkContext
 
-# only drag those starts with .text:
 def opcode_detect(asm_line):
-    # use WordEnd() to avoid parsing leading a-f of non-hex numbers as a hex
-    if asm_line.startswith('.text:'):
-        hex_integer = Word(hexnums) + WordEnd()
-        line = ".text:" + hex_integer + Optional((hex_integer*(1,))("instructions") + Word(alphas,alphanums)("opcode"))
-        result = line.parseString(asm_line)
-        if "opcode" in result:
-            return result.opcode
-    else:
-        return None
-
+    pattern = re.compile(r'([\s])([A-F0-9]{2})([\s]+)([a-z]+)([\s+])')
+    pattern_list = pattern.findall(str(asm_line))
+    if len(pattern_list)!=0:
+        opcode = [item[3] for item in pattern_list][0]
+    else: opcode = None
+    return opcode
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "CSCI 8360 Project 2",
@@ -44,4 +39,4 @@ if __name__ == "__main__":
     rdd_opcode = rdd_asm.map(lambda x: ((x[0], opcode_detect(x[1])), 1))
     rdd_opcode = rdd_opcode.filter(lambda x: x[0][1]!=None).reduceByKey(add)
 
-    print(rdd_opcode.take(200))
+    print(rdd_opcode.sortBy(lambda x: x[1]).take(200))

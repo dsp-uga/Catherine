@@ -22,12 +22,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- [Python 3.6](https://www.python.org/downloads/release/python-360/)
-- [Anaconda](https://www.anaconda.com/)
-- [Apache Spark 2.2.1](http://spark.apache.org/)
-- [Pyspark 2.2.1](https://pypi.python.org/pypi/pyspark/2.2.1) - Python API for Apache Spark (`pyspark.ml`, `pyspark.sql`)
-
-- [Google Cloud Platform](https://cloud.google.com)
+  - [Python 3.6](https://www.python.org/downloads/release/python-360/)
+  - [Anaconda](https://www.anaconda.com/)
+  - [Apache Spark 2.2.1](http://spark.apache.org/)
+  - [Pyspark 2.2.1](https://pypi.python.org/pypi/pyspark/2.2.1) - Python API for Apache Spark (`pyspark.ml`, `pyspark.sql`)
+  - [Google Cloud Platform](https://cloud.google.com)
 
 ### Environment Setup
 

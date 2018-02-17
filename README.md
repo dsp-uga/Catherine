@@ -167,7 +167,7 @@ Random forest classifier can be a nice classifier to deal with sparse features (
 - **Parya Jandaghi** - [parya-j](https://github.com/parya-j)
 - **Vibodh Fenani** - [vibodh01](https://github.com/vibodh01)
 
-See the [CONTRIBUTORS]() file for details.
+See the [CONTRIBUTORS](CONTRIBUTORS.md) file for details.
 
 ## License
 

@@ -14,7 +14,25 @@ This project uses the hexadecimal binaries as documents, and classify them into 
 8. Obfuscator.ACY
 9. Gatak
 
-(some custormized part for this project)
+All the documents have a corresponding **hash**, **bytes file**, and **asm file**. All the hashes are listed in `X_train.txt` and `X_test.txt` documents, and the labels for documents in training set are in `y_train.txt` file. The previews of bytes files and asm files showed as follows:
+
+### bytes file
+
+<p align="center">
+<img src="img/bytes_preview.png" />
+</p>
+
+- `00401000`: hexadecimal tokan, a line pointer and can be safely ignored
+- `A4`, `AC`, `4A`: hexadecimal pairs, the code of the malware instance itself
+
+### asm file
+
+<p align="center">
+<img src="img/asm_preview.png" />
+</p>
+
+- `text`: segments, included segments for containing instruction codes, segments for storing the data elements, and segments for keeping the program stack. (the first text of each line in asm file)
+- `push`, `lea`, `xor`: opcodes (operation code), a machine language instruction that specifies the operation to be performed. (the first text after bytes of each line in asm file)
 
 ## Getting Started
 
@@ -28,22 +46,17 @@ These instructions will get you a copy of the project up and running on your loc
   - [Pyspark 2.2.1](https://pypi.python.org/pypi/pyspark/2.2.1) - Python API for Apache Spark (`pyspark.ml`, `pyspark.sql`)
   - [Google Cloud Platform](https://cloud.google.com)
 
-### Environment Setup
-
-(really?)
-
-
 ## Running the tests
 
 You can run all the `.py` scripts via **python** or **spark-submit** on your local machine. Make sure to speciify the exact path of your spark-submit.
 
 Notes that the dataset using in this case is extremely huge, reading the whole dataset, computing features, and implementing classification every time might take the whole day for only one result.
 
-In this project, we separate the whole process into **feature extraction** and **classification** two parts. You are able to select those features that interest you and input them into the random forest classifier by instruction.
+In this project, we separated the whole process into **feature extraction** and **classification** two parts. You are able to select those features that interest you and input them into the random forest classifier by instruction.
 
 ### Features Extraction
 
-There are seven features extracted in this case. Read following description of how they will be extracted and what script they are in:
+There are seven features extracted in this case. Read following description of how they were extracted and what script they are in:
 
 #### Features
 
@@ -69,10 +82,10 @@ There are seven features extracted in this case. Read following description of h
 #### Running
 
 ```
-$ python <feature_script>.py [file-directory] [bytes/asm_file-directory] [optional args]
+$ python <feature_script>.py [file-directory] [bytes/asm_file-directory] [output-directory] [optional args]
 ```
 ```
-$ usr/bin/spark-submit <feature_scrip>.py [file-directory] [bytes/asm_file-directory] [optional args]
+$ usr/bin/spark-submit <feature_script>.py [file-directory] [bytes/asm_file-directory] [output-directory] [optional args]
 ```
 
 #### Required Arguments
@@ -80,6 +93,8 @@ $ usr/bin/spark-submit <feature_scrip>.py [file-directory] [bytes/asm_file-direc
 - `file-path`: Directory contains the input hash and label files
 
 - `bytes-path` or `asm-path`: Directory contains the input `.bytes` or `.asm` files
+
+- `output-path`: Directory to output files
 
 #### Optional Arguments
 
@@ -90,7 +105,7 @@ $ usr/bin/spark-submit <feature_scrip>.py [file-directory] [bytes/asm_file-direc
 
 ### Random Forest Classifier
 
-We are using the built-in random forest classifier in `pyspark.ml`. Input the `.parquet` files obtained in previous part, and the classifier will output a list of prediction of malware classes for each document.
+We used the built-in random forest classifier in `pyspark.ml`. Input the `.parquet` files obtained in previous part, and the classifier will output a list of prediction of malware classes for each document.
 
 #### Running
 
@@ -103,13 +118,13 @@ $ usr/bin/spark-submit RF_classifier.py [directories] [optional args]
 
 #### Required Arguments
 
- - `directories`: those directories containing the parquets files you generated from previous feature selection part. List every train and test directories and separate them by comma.
+ - `directories`: those directories containing the parquets files you generated from previous feature selection part. List every train and test directories in order and separate them by comma.
  e.g. `segment_train,segment_test,1-gram-train,1-gram_test`
 
 #### Optional Arguments
 
- - `-n`: Number of trees in random forest classifier
- - `-m`: Maximum depth of each branch in random forest classifier
+ - `-n`: Number of trees in random forest classifier, default = 10
+ - `-m`: Maximum depth of each branch in random forest classifier, default = 5
 
 ## Test Results
 

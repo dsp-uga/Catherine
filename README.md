@@ -61,10 +61,19 @@ There are seven features extracted in this case. Read following description of h
 #### Features
 
 1. **bytes file size**
+   - The file size is calculated using file_processor.py. File sizes for all files have been calculated using both urllib
+     as well as sys library in spark for rdd. RDD approach takes a lot of memory
 2. **asm file size**
+   - The file size is calculated using file_processor.py.
 3. **bytes and asm file size ratio**
+   - The ratio of asm and bytes file is taken.
 4. **unigram bytes (from bytes files)**
+    - Idea behind calculating unigrams is that hexadecimal digits when converted to integer can take values between 
+      0-256. So accordinly we create a vector of 256 size and make the count each number which occurs
 5. **bigram bytes (from bytes files)**
+     Idea behind calculating unigrams is that hexadecimal digits when converted to integer can take values between 
+      0-256*256 . So accordinly we create a vector of 256*256 size and make the count each number which occurs
+      However we reduce the feature size using the top 2000 elements for each row
 6. **segment (from asm files)** - `segment_cnt.py`
 
     - Detected the segments in each asm file

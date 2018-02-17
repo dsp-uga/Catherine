@@ -12,6 +12,8 @@
 
 
 - **Parya Jandaghi** - [parya-j](https://github.com/parya-j)
+  - GCP cluster
+  - Feature integration
 
 
 - **Vibodh Fenani** - [vibodh01](https://github.com/vibodh01)

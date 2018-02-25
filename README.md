@@ -69,10 +69,10 @@ There are seven features extracted in this case. Read following description of h
    - The ratio of asm and bytes file is taken.
 4. **unigram bytes (from bytes files)**
     - Idea behind calculating unigrams is that hexadecimal digits when converted to integer can take values between 
-      0-256. So accordinly we create a vector of 256 size and make the count each number which occurs
+      0-256. So accordingly we create a vector of 256 size and make the count of each number which occurs
 5. **bigram bytes (from bytes files)**
      Idea behind calculating unigrams is that hexadecimal digits when converted to integer can take values between 
-      0-256*256 . So accordinly we create a vector of 256*256 size and make the count each number which occurs
+      0-256*256 . So accordinly we create a vector of 256 cross 256 size and make the count each number which occurs
       However we reduce the feature size using the top 2000 elements for each row
 6. **segment (from asm files)** - `segment_cnt.py`
 
